@@ -113,7 +113,7 @@ curl http://localhost:3000/api/households/HOUSEHOLD_ID
    - Go to Settings → Environment Variables
    - Add the following variables:
      ```
-     MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/apartment-management-system
+     MONGO_URI=mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/apartment-management-system
      NODE_ENV=production
      ```
 
@@ -124,11 +124,11 @@ curl http://localhost:3000/api/households/HOUSEHOLD_ID
 
 ### Environment Variables
 
-| Variable    | Description                      | Example                                              |
-| ----------- | -------------------------------- | ---------------------------------------------------- |
-| `MONGO_URI` | MongoDB connection string        | `mongodb+srv://user:pass@cluster.mongodb.net/dbname` |
-| `NODE_ENV`  | Environment mode                 | `production` or `development`                        |
-| `PORT`      | Server port (auto-set by Vercel) | `3000`                                               |
+| Variable    | Description                      | Example                                                              |
+| ----------- | -------------------------------- | -------------------------------------------------------------------- |
+| `MONGO_URI` | MongoDB connection string        | `mongodb+srv://YOUR_USER:YOUR_PASS@YOUR_CLUSTER.mongodb.net/YOUR_DB` |
+| `NODE_ENV`  | Environment mode                 | `production` or `development`                                        |
+| `PORT`      | Server port (auto-set by Vercel) | `3000`                                                               |
 
 ## Project Structure
 

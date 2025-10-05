@@ -1,5 +1,14 @@
 # Vercel Deployment Checklist
 
+## ⚠️ SECURITY NOTICE
+
+**NEVER commit real MongoDB credentials to version control!**
+
+- Always use placeholder values in documentation
+- Keep actual credentials in environment variables only
+- Use `.env` files for local development (excluded by `.gitignore`)
+- Set production credentials in Vercel dashboard only
+
 ## Pre-deployment Setup
 
 ### 1. MongoDB Atlas Setup
@@ -8,7 +17,7 @@
 - [ ] Create a new cluster
 - [ ] Create a database user with read/write permissions
 - [ ] Whitelist IP addresses (0.0.0.0/0 for all IPs)
-- [ ] Get connection string: `mongodb+srv://username:password@cluster.mongodb.net/apartment-management-system`
+- [ ] Get connection string: `mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/apartment-management-system`
 
 ### 2. Local Testing
 
@@ -94,7 +103,7 @@ Update the `importHouseholds.js` script to use production MongoDB URI if needed,
 
    - Verify MONGO_URI environment variable is set in Vercel
    - Check if MongoDB Atlas IP whitelist includes 0.0.0.0/0
-   - Verify connection string format: `mongodb+srv://username:password@cluster.mongodb.net/dbname`
+   - Verify connection string format: `mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE`
    - Ensure database user has proper permissions
 
 3. **Vercel Function Timeout**
