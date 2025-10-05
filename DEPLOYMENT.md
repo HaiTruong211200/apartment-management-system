@@ -81,26 +81,65 @@ Update the `importHouseholds.js` script to use production MongoDB URI if needed,
 
 ## Troubleshooting
 
-### Common Issues:
+### Common Deployment Issues:
 
-1. **MongoDB Connection Error**
+1. **Build Failed - "All checks have failed"**
 
+   - Check if all dependencies are in package.json
+   - Verify Node.js version compatibility (ensure >= 18.x)
+   - Check for syntax errors in code
+   - Ensure all required files are present
+
+2. **MongoDB Connection Error**
+
+   - Verify MONGO_URI environment variable is set in Vercel
    - Check if MongoDB Atlas IP whitelist includes 0.0.0.0/0
-   - Verify connection string is correct
+   - Verify connection string format: `mongodb+srv://username:password@cluster.mongodb.net/dbname`
    - Ensure database user has proper permissions
 
-2. **Vercel Function Timeout**
+3. **Vercel Function Timeout**
 
    - Check function timeout in vercel.json (set to 30s)
    - Optimize database queries
+   - Check if MongoDB connection is taking too long
 
-3. **CORS Issues**
+4. **CORS Issues**
 
-   - Update CORS origin in api/index.js with your Vercel domain
+   - CORS is now set to allow all origins in production
+   - If needed, update specific domains in api/index.js
 
-4. **Environment Variables Not Working**
-   - Redeploy after setting environment variables
-   - Check variable names are exactly correct
+5. **Environment Variables Not Working**
+
+   - Redeploy after setting environment variables: `vercel --prod`
+   - Check variable names are exactly correct (case-sensitive)
+   - Verify variables are set for Production environment
+
+6. **Static Files Not Loading**
+   - Ensure public/ directory exists with index.html
+   - Check vercel.json routes configuration
+   - Verify static files are properly referenced
+
+### Quick Fixes:
+
+```bash
+# If deployment fails, try these steps:
+
+# 1. Clean install dependencies
+rm -rf node_modules package-lock.json
+npm install
+
+# 2. Test locally first
+npm start
+
+# 3. Check for Node.js version compatibility
+node --version  # Should be 18.x or higher
+
+# 4. Redeploy with verbose logging
+npx vercel --prod --debug
+
+# 5. Check deployment logs
+npx vercel logs [deployment-url]
+```
 
 ### Useful Commands:
 

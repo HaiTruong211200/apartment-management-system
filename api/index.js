@@ -16,9 +16,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ?
-      ['https://your-vercel-domain.vercel.app'] :
-      ['http://localhost:3000'],
+  origin: process.env.NODE_ENV === 'production' ? true :
+                                                  ['http://localhost:3000'],
   credentials: true
 }));
 
@@ -32,6 +31,11 @@ let cachedDb = null;
 async function connectToDatabase() {
   if (cachedDb) {
     return cachedDb;
+  }
+
+  // Check if MONGO_URI is provided
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI environment variable is not set');
   }
 
   try {
@@ -71,8 +75,17 @@ app.use(errorHandler);
 
 // For Vercel serverless functions
 module.exports = async (req, res) => {
-  await connectToDatabase();
-  return app(req, res);
+  try {
+    await connectToDatabase();
+    return app(req, res);
+  } catch (error) {
+    console.error('Serverless function error:', error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: process.env.NODE_ENV === 'development' ? error.message :
+                                                        'Something went wrong'
+    });
+  }
 };
 
 // For local development
