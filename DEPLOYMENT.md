@@ -17,7 +17,7 @@
 - [ ] Create a new cluster
 - [ ] Create a database user with read/write permissions
 - [ ] Whitelist IP addresses (0.0.0.0/0 for all IPs)
-- [ ] Get connection string: `mongodb+srv://[username]:[password]@[cluster-url]/apartment-management-system`
+- [ ] Get connection string from MongoDB Atlas dashboard
 
 ### 2. Local Testing
 
@@ -103,7 +103,7 @@ Update the `importHouseholds.js` script to use production MongoDB URI if needed,
 
    - Verify MONGO_URI environment variable is set in Vercel
    - Check if MongoDB Atlas IP whitelist includes 0.0.0.0/0
-   - Verify connection string format: `mongodb+srv://[username]:[password]@[cluster-url]/[database-name]`
+   - Verify connection string matches MongoDB Atlas format from your dashboard
    - Ensure database user has proper permissions
 
 3. **Vercel Function Timeout**

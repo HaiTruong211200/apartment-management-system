@@ -116,7 +116,7 @@ npx vercel --prod
 
 1. Double-check your MONGO_URI in Vercel settings
 2. Ensure IP 0.0.0.0/0 is whitelisted in MongoDB Atlas
-3. Test connection string format: `mongodb+srv://username:password@cluster.mongodb.net/apartment-management-system`
+3. Verify connection string follows MongoDB Atlas format (check your MongoDB Atlas dashboard)
 
 ### ❌ API returns 500 errors
 
