@@ -1,10 +1,10 @@
 import "./Login.css";
 
 import { useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
-import { toast } from "react-hot-toast";
-// import AuthService from "../../services/auth.service";
+import { login, register, me } from "../../api/auth";
 
 function Login() {
   const [isSignUpActive, setIsSignUpActive] = useState(false);
@@ -17,62 +17,39 @@ function Login() {
   });
   const [error, setError] = useState("");
 
+  const [isRegister, setIsRegister] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("alice@example.com");
+  const [password, setPassword] = useState("Password123");
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsSignUpActive(!isSignUpActive);
   };
 
-  const handleSignUp = async (e) => {
-    // e.preventDefault();
-    // setError("");
-    // try {
-    //   const response = await axios.post("http://localhost:8080/api/v1/users/register", {
-    //     // Vế trái này khớp với định nghĩa bên API
-    //     name: registerData.name,
-    //     username: registerData.username,
-    //     password: registerData.password,
-    //   })
-    // } catch(error){
-    //   setError("SignUp failed..");
-    // }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const action = isRegister
+        ? register({ name, email, password })
+        : login({ email, password });
+
+      const { user, token } = await action;
+      localStorage.setItem("token", token);
+      setUser(user);
+      toast.success(isRegister ? "Registered" : "Logged in");
+      const profile = await me(token);
+      if (profile) setUser(profile);
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
-  const handleLogin = async (e) => {
-    // e.preventDefault();
-    // setError("");
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8080/api/v1/auth/login",
-    //     {
-    //       username: loginData.username,
-    //       password: loginData.password,
-    //     }
-    //   );
-    //   localStorage.setItem("accessToken", response.data.data.accessToken);
-    //   // Điều hướng khi đăng nhập thành công
-    //   navigate("/dashboard");
-    //   toast.success("Login successful!");
-    // } catch (error) {
-    //   setError("Login failed. Please check your credentials.");
-    // }
-  };
-
-  //   const loginWithGoogle = async () => {
-  //     try {
-  //       const url = await AuthService.authenticate("google");
-  //       window.location.href = url;
-  //     } catch (error) {
-  //       console.error(
-  //         "Lỗi xác thực với Google: ",
-  //         error?.response?.data?.message || ""
-  //       );
-  //     }
-  //   };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData((prev) => ({ ...prev, [name]: value }));
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
@@ -94,6 +71,10 @@ function Login() {
                   className="w-full outline-blue-500 border-2 border-gray-400 rounded-xl p-3 mt-1 bg-transparent"
                   type="text"
                   placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  minLength={2}
                 />
               </div>
               <div className="input">
@@ -102,6 +83,9 @@ function Login() {
                   type="email"
                   placeholder="Email"
                   autoComplete="username"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="input">
@@ -110,16 +94,29 @@ function Login() {
                   type="password"
                   placeholder="Password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
-              <div className="input">
-                <input
-                  className="w-full outline-blue-500 border-2 border-gray-400 rounded-xl p-3 mt-1 bg-transparent"
-                  type="password"
-                  placeholder="Confirm password"
-                  autoComplete="new-password"
-                />
-              </div>
+              {isRegister && (
+                <div className="input">
+                  <input
+                    className="w-full outline-blue-500 border-2 border-gray-400 rounded-xl p-3 mt-1 bg-transparent"
+                    type="password"
+                    placeholder="Confirm password"
+                    autoComplete="new-password"
+                    value={registerData.confirm}
+                    onChange={(e) =>
+                      setRegisterData({
+                        ...registerData,
+                        confirm: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+              )}
             </div>
             <button className="btn-tdn" type="submit">
               Sign Up
@@ -129,7 +126,7 @@ function Login() {
 
         {/* Sign In Form */}
         <div className="form-container sign-in">
-          <form onSubmit={handleLogin}>
+          <form onSubmit={onSubmit}>
             <div className="header">
               <h1 className="text">Sign In</h1>
               <div className="underline"></div>
@@ -142,7 +139,9 @@ function Login() {
                   placeholder="Username"
                   name="username"
                   value={loginData.username}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setLoginData({ ...loginData, username: e.target.value })
+                  }
                   autoComplete="username"
                 />
               </div>
@@ -153,7 +152,9 @@ function Login() {
                   placeholder="Password"
                   name="password"
                   value={loginData.password}
-                  onChange={handleInputChange}
+                  onChange={(e) =>
+                    setLoginData({ ...loginData, password: e.target.value })
+                  }
                   autoComplete="current-password"
                 />
               </div>
