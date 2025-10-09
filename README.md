@@ -39,3 +39,32 @@ It enables administrators, staff, and residents to efficiently manage personal d
 | **Database**        | MongoDB / MySQL                  |
 | **Authentication**  | JWT (JSON Web Token)             |
 | **Version Control** | Git + GitHub                     |
+
+## 🔐 Auth API (Node.js / Express / PostgreSQL)
+
+Backend located in `server/` provides registration & login using bcrypt + JWT.
+
+### Endpoints
+
+- `POST /api/auth/register` body: `{ email, password, fullName }`
+- `POST /api/auth/login` body: `{ email, password }`
+- `GET /api/auth/me` header: `Authorization: Bearer <token>`
+
+### Quick Start
+
+1. Create database (default name `ams`).
+2. Copy `server/.env.example` to `server/.env` and adjust secrets.
+3. Install deps:
+   ```bash
+   cd server
+   npm install
+   npm run dev
+   ```
+4. Server runs on `http://localhost:4000`.
+
+### Security Notes
+
+- Passwords hashed with bcrypt (configurable rounds via `BCRYPT_SALT_ROUNDS`).
+- JWT signed with HS256; rotate & store `JWT_SECRET` securely.
+- Use HTTPS + secure cookie (if moving token to cookie in future).
+- Apply role-based authorization with provided middleware scaffold.

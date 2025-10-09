@@ -1,0 +1,180 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment files (keep examples)
+.env
+.env.*
+!.env.example
+!.env*.example
+
+# Caches and coverage
+.cache/
+.parcel-cache/
+.eslintcache
+.nyc_output/
+coverage/
+.vite/
+.turbo/
+.nx/
+.lighthouse/
+.esbuild/
+
+# Build output
+dist/
+build/
+out/
+tmp/
+temp/
+
+# Framework-specific
+.next/
+.nuxt/
+.svelte-kit/
+storybook-static/
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor/IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Databases and dumps
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+dump.sql
+*.sql.gz
+pgdata/
+data/
+
+# Docker/local data
+.docker/
+docker-data/
+
+# Node REPL
+.node_repl_history
+
+# Uploads/storage
+uploads/
+storage/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Swap/temporary
+*~
+```// filepath: /home/nvhmadridista/Workspace/CNPM/AMS/.gitignore
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment files (keep examples)
+.env
+.env.*
+!.env.example
+!.env*.example
+
+# Caches and coverage
+.cache/
+.parcel-cache/
+.eslintcache
+.nyc_output/
+coverage/
+.vite/
+.turbo/
+.nx/
+.lighthouse/
+.esbuild/
+
+# Build output
+dist/
+build/
+out/
+tmp/
+temp/
+
+# Framework-specific
+.next/
+.nuxt/
+.svelte-kit/
+storybook-static/
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor/IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Databases and dumps
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+dump.sql
+*.sql.gz
+pgdata/
+data/
+
+# Docker/local data
+.docker/
+docker-data/
+
+# Node REPL
+.node_repl_history
+
+# Uploads/storage
+uploads/
+storage/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Swap/temporary
