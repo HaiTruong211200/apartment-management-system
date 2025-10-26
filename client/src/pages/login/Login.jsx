@@ -2,16 +2,16 @@ import "./Login.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { toast } from "react-hot-toast";
 // import AuthService from "../../services/auth.service";
 
 function Login() {
   const [isSignUpActive, setIsSignUpActive] = useState(false);
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [registerData, setRegisterData] = useState({
-    name: "",
     username: "",
+    email: "",
     password: "",
     confirm: "",
   });
@@ -24,38 +24,41 @@ function Login() {
   };
 
   const handleSignUp = async (e) => {
-    // e.preventDefault();
-    // setError("");
-    // try {
-    //   const response = await axios.post("http://localhost:8080/api/v1/users/register", {
-    //     // Vế trái này khớp với định nghĩa bên API
-    //     name: registerData.name,
-    //     username: registerData.username,
-    //     password: registerData.password,
-    //   })
-    // } catch(error){
-    //   setError("SignUp failed..");
-    // }
+    e.preventDefault();
+    setError("");
+    try {
+      const response = await axios.post("http://localhost:4000/api/register", {
+        // Vế trái này khớp với định nghĩa bên API
+        username: registerData.username,
+        email: registerData.email,
+        password: registerData.password,
+      });
+    } catch (error) {
+      setError("SignUp failed..");
+    }
   };
 
   const handleLogin = async (e) => {
-    // e.preventDefault();
-    // setError("");
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8080/api/v1/auth/login",
-    //     {
-    //       username: loginData.username,
-    //       password: loginData.password,
-    //     }
-    //   );
-    //   localStorage.setItem("accessToken", response.data.data.accessToken);
-    //   // Điều hướng khi đăng nhập thành công
-    //   navigate("/dashboard");
-    //   toast.success("Login successful!");
-    // } catch (error) {
-    //   setError("Login failed. Please check your credentials.");
-    // }
+    console.log("Login data:", loginData);
+    e.preventDefault();
+    setError("");
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/login",
+        {
+          email: loginData.email,
+          password: loginData.password,
+        }
+      );
+      console.log("Login response:", response);
+      localStorage.setItem("accessToken", response.data.token);
+      // Điều hướng khi đăng nhập thành công
+      navigate("/dashboard");
+      toast.success("Login successful!");
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Login failed.");
+      setError(`Login failed. Please check your credentials. ${error}`);
+    }
   };
 
   //   const loginWithGoogle = async () => {
@@ -83,7 +86,7 @@ function Login() {
       >
         {/* Sign Up Form */}
         <div className="form-container sign-up">
-          <form action="">
+          <form onSubmit={handleSignUp}>
             <div className="header">
               <h1 className="text">Create Account</h1>
               <div className="underline"></div>
@@ -139,9 +142,9 @@ function Login() {
                 <input
                   type="text"
                   className="w-full outline-blue-500 border-2 border-gray-400 rounded-xl p-3 mt-1 bg-transparent"
-                  placeholder="Username"
-                  name="username"
-                  value={loginData.username}
+                  placeholder="Email"
+                  name="email"
+                  value={loginData.email}
                   onChange={handleInputChange}
                   autoComplete="username"
                 />
